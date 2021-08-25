@@ -1,2 +1,2 @@
-# Electron_Dashboard
+# Electron
 Dashboard para gereciamento de produtos
