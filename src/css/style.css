@@ -329,6 +329,10 @@
 {
     background: #003147;
 }
+.cancelado
+{
+    background: #f00;
+}
 .details .recentCustomers
 {
     position: relative;
