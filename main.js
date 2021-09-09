@@ -15,9 +15,9 @@ app.on('ready', () => {
             nodeIntegration: true,
             contextIsolation: false
         },
-        resizable: false
+        //resizable: false
     });
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
 
     mainWindow.loadURL(`file://${__dirname}/src/view/index.html`);
 });
@@ -52,7 +52,7 @@ ipcMain.on('abrir-editar-produto', () => {
         editarProduto = new BrowserWindow({
             width: 400,
             height: 450,
-            //alwaysOnTop: true,
+            alwaysOnTop: true,
             frame: false,
             webPreferences: {
                 nodeIntegration: true,
@@ -75,6 +75,6 @@ ipcMain.on('fechar-form-produto', () => {
     formProdutoWindow.close();
 });
 
-ipcMain.on('fechar-editar-produto', ()=>{
+ipcMain.on('fechar-editar-produto', () => {
     editarProduto.close();
 });

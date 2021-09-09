@@ -11,11 +11,24 @@ let selectStatus = document.querySelector('#selectStatus');
 let selectPagamento = document.querySelector('#selectPagamento');
 let btnSalvar = document.querySelector('#btnSalvar');
 
-btnSalvar.addEventListener('click', function () {
-    if (dados.salvarDados(inputNomeProd, inputPreco, selectStatus, selectPagamento)) {
-        montaAlerta(inputNomeProd);
-    }
-});
+window.onload = () => {
+    
+    carregaForm();
+
+    btnSalvar.addEventListener('click', function () {
+        if (dados.atualizaDados(93, inputNomeProd, inputPreco, selectStatus, selectPagamento))
+            montaAlerta(inputNomeProd);
+        console.log(inputNomeProd.value);
+    });
+
+    btnFechar.addEventListener('click', function () {
+        ipcRenderer.send('fechar-editar-produto');
+    });
+}
+
+function carregaForm(id){
+    inputNomeProd.value = id;
+}
 
 function montaAlerta(nomeProduto) {
     new Notification('Dashboard', {
@@ -24,6 +37,6 @@ function montaAlerta(nomeProduto) {
     });
 }
 
-btnFechar.addEventListener('click', function () {
-    ipcRenderer.send('fechar-editar-produto');
-});
+module.exports = {
+    carregaForm
+}

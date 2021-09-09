@@ -4,20 +4,39 @@ const {
 const {
     ipcRenderer
 } = require('electron');
-const con = getConnection();
+const conn = getConnection();
 
 
 module.exports = {
     salvarDados(nomeProduto, precoProduto, statusPedido, statusPagamento) {
         if (this.validadeDados(nomeProduto, precoProduto, statusPedido, statusPagamento)) {
-            con.connect(function (err) {
+            conn.connect(function (err) {
                 if (err) throw err;
                 let sql = "INSERT INTO produtos (nome_produto,preco_produto,status_pedido,status_pagamento) VALUES (?,?,?,?)";
-                con.query(sql, [nomeProduto.value, precoProduto.value, statusPedido.value, statusPagamento.value], function (erro, result) {
+                conn.query(sql, [nomeProduto.value, precoProduto.value, statusPedido.value, statusPagamento.value], function (erro, result) {
                     if (erro) throw erro;
                     nomeProduto.value = '';
                     precoProduto.value = '';
                 });
+            })
+            this.mostrarDados();
+            return true;
+        }
+    },
+    atualizaDados(id, nomeProdutoNovo, precoProdutoNovo, statusPedidoNovo, statusPagamentoNovo){
+        if(this.validadeDados(nomeProdutoNovo, precoProdutoNovo, statusPedidoNovo, statusPagamentoNovo)){
+            conn.connect(function(erro){
+                if(erro) throw erro;
+                let sql = `UPDATE produtos SET 
+                nome_produto='${nomeProdutoNovo.value}'
+                ,preco_produto=${precoProdutoNovo.value}
+                ,status_pedido='${statusPedidoNovo.value}'
+                ,status_pagamento='${statusPagamentoNovo.value}'
+                WHERE id=${id}`;
+                conn.query(sql, function(erro, result){
+                    console.log(result);
+                });
+                console.log(sql);
             })
             this.mostrarDados();
             return true;
